@@ -201,13 +201,16 @@ library LibLoans {
         view
         returns (uint16 ratio_)
     {
-        ratio_ = uint16(
-            (uint64(loan(loanID).duration) * loan(loanID).interestRate) /
-                SECONDS_PER_YEAR
-        );
+        if (loan(loanID).interestRate > 0) {
+            ratio_ = uint16(
+                (uint64(loan(loanID).duration) * loan(loanID).interestRate) /
+                    SECONDS_PER_YEAR
+            );
 
-        if (ratio_ == 0) {
-            ratio_ = 1;
+            // If calculation for interest ratio chopped off decimals resulting in 0%, set minimum interest to 1%
+            if (ratio_ == 0) {
+                ratio_ = 1;
+            }
         }
     }
 }

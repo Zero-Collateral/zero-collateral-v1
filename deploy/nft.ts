@@ -80,7 +80,7 @@ const deployNFT: DeployFunction = async (hre) => {
         contract: 'ent_moveMerkle_NFTDistributor_v1',
         skipIfAlreadyDeployed: true,
       },
-      { contract: 'ent_claim_NFTDistributor_v1', skipIfAlreadyDeployed: false },
+      { contract: 'ent_claim_NFTDistributor_v1', skipIfAlreadyDeployed: true },
       { contract: 'ext_distributor_NFT_v1', skipIfAlreadyDeployed: true },
     ],
     hre,

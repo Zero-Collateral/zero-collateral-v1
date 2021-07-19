@@ -7,7 +7,6 @@ import { RolesMods } from "../contexts2/access-control/roles/RolesMods.sol";
 import { ADMIN, AUTHORIZED } from "../shared/roles.sol";
 
 // Libraries
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import { NFTLib } from "./libraries/NFTLib.sol";
 import { RolesLib } from "../contexts2/access-control/roles/RolesLib.sol";
 import {
