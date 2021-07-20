@@ -166,6 +166,11 @@ const deployProtocol: DeployFunction = async (hre) => {
         {
           contract: 'CompoundFacet',
           skipIfAlreadyDeployed: false,
+        },
+        {
+          contract: 'CompoundClaimCompFacet',
+          skipIfAlreadyDeployed: false,
+          args: [dappAddresses.compoundComptrollerAddress],
         }
       )
 

@@ -4,7 +4,8 @@ import { BigNumber } from 'ethers'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { Test } from 'mocha'
 
-import { IAToken, ICErc20, IERC20 } from '../../../../types/typechain'
+import { getDappAddresses } from '../../../../config'
+import { IAToken, ICErc20, IComptroller, IERC20 } from '../../../../types/typechain'
 import { getFunds } from '../../get-funds'
 import { LoanHelpersReturn } from '../../loans'
 import { TestAction, TestScenario } from '../story-helpers'
@@ -55,6 +56,10 @@ export default class DappStoryTestDriver extends StoryTestDriver {
       }
       case 'SWAP': {
         void DappStoryTestDriver.generateTestsForSwap(hre, action, tests)
+        break
+      }
+      case 'CLAIM': {
+        void DappStoryTestDriver.generateTestsForClaim(hre, action, tests)
         break
       }
     }
@@ -247,6 +252,66 @@ export default class DappStoryTestDriver extends StoryTestDriver {
       default:
         break
     }
+  }
+
+  static async generateTestsForClaim(
+    hre: HardhatRuntimeEnvironment,
+    action: TestAction,
+    tests: Test[]
+  ): Promise<void> {
+    const { getNamedSigner, contracts, network } = hre
+    const dapp = action.actionType
+    switch (dapp) {
+      case 'COMPOUND': {
+        const newTest = new Test('COMPOUND Claim COMP', async () => {
+          const borrower = await getNamedSigner('borrower')
+          const loan = await LoanStoryTestDriver.getLoan(hre, borrower)
+          const { details, diamond } = loan
+          let shouldPass = true
+          await hre.evm.advanceTime(details.loan.duration)
+          const dappAddresses = getDappAddresses(network)
+          const Comptroller = await contracts.get<IComptroller>('IComptroller', {
+            at: dappAddresses.compoundComptrollerAddress,
+          })
+          const escrowAddress = await diamond.getLoanEscrow(details.loan.id)
+          const compBefore = await Comptroller.compAccrued(escrowAddress)
+
+          //read the state and determine if this should pass
+          if (!loan) shouldPass = false
+          if (compBefore.lte(0)) shouldPass = false
+          if (shouldPass) {
+            await DappStoryTestDriver.claimComp(hre, loan)
+          } else {
+            await DappStoryTestDriver.claimComp(hre, loan).catch((error) => {
+              expect(error).to.exist
+            })
+          }
+        })
+        tests.push(newTest)
+        break
+      }
+      default:
+        break
+    }
+  }
+
+  static async claimComp(
+    hre: HardhatRuntimeEnvironment,
+    loan: LoanHelpersReturn
+  ): Promise<void> {
+    const { contracts, network } = hre
+    const { details, diamond } = loan
+    const dappAddresses = getDappAddresses(network)
+    const Comptroller = await contracts.get<IComptroller>('IComptroller', {
+      at: dappAddresses.compoundComptrollerAddress,
+    })
+    const escrowAddress = await diamond.getLoanEscrow(details.loan.id)
+    const compBefore = await Comptroller.compAccrued(escrowAddress)
+    await diamond
+      .connect(details.borrower.signer)
+      .compoundClaimComp(details.loan.id)
+    const compafter = await Comptroller.compAccrued(escrowAddress)
+    expect(compafter.toString()).to.equal('0')
   }
 
   static async lendYearn(

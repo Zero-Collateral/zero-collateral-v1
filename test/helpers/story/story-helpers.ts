@@ -37,6 +37,10 @@ export const TREE_STRUCTURE = {
     network: STORY_NETWORKS.MAINNET,
     parents: ['LOAN.TAKE_OUT'],
   },
+  'DAPP.CLAIM.COMPOUND': {
+    network: STORY_NETWORKS.MAINNET,
+    parents: ['LOAN.TAKE_OUT', 'DAPP.LEND.COMPOUND'],
+  },
   'DAPP.LEND.AAVE': {
     network: STORY_NETWORKS.ALL,
     parents: ['LOAN.TAKE_OUT'],
@@ -59,18 +63,6 @@ export const TREE_STRUCTURE = {
   },
 }
 
-// export const DAPP_ACTION_TARGETS = {
-//   LEND: {
-//     COMPOUND: 0,
-//     AAVE: 1,
-//     POOL_TOGETHER: 2,
-//   },
-//   SWAP: {
-//     UNISWAP: 0,
-//     SUSHISWAP: 1,
-//   },
-// }
-
 export interface StoryValues {
   network: string
   parents?: string[]
@@ -78,13 +70,11 @@ export interface StoryValues {
 
 export interface TestScenarioDomain {
   domainName: string
-  //shouldPass: boolean
   scenarios: TestScenario[]
 }
 
 export interface TestScenario {
   domain: string
-  //shouldPass: boolean
   actions: TestAction[]
 }
 

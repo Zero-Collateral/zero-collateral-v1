@@ -9905,9 +9905,9 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-"prettier-plugin-solidity@git://github.com/teller-protocol/prettier-plugin-solidity#0496eb6483e0081530010882b8632c29b3f773e9":
+prettier-plugin-solidity@prettier-solidity/prettier-plugin-solidity#aa41b1093421f6ff67a0e6b1442081e05dabe71c:
   version "1.0.0-beta.16"
-  resolved "git://github.com/teller-protocol/prettier-plugin-solidity#0496eb6483e0081530010882b8632c29b3f773e9"
+  resolved "https://codeload.github.com/prettier-solidity/prettier-plugin-solidity/tar.gz/aa41b1093421f6ff67a0e6b1442081e05dabe71c"
   dependencies:
     "@solidity-parser/parser" "^0.13.2"
     emoji-regex "^9.2.2"

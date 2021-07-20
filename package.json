@@ -70,7 +70,7 @@
     "moment": "^2.29.1",
     "prando": "^6.0.1",
     "prettier": "^2.3.1",
-    "prettier-plugin-solidity": "git://github.com/teller-protocol/prettier-plugin-solidity#0496eb6483e0081530010882b8632c29b3f773e9",
+    "prettier-plugin-solidity": "prettier-solidity/prettier-plugin-solidity#aa41b1093421f6ff67a0e6b1442081e05dabe71c",
     "solhint": "^3.3.4",
     "solhint-plugin-prettier": "^0.0.5",
     "ts-generator": "^0.1.1",

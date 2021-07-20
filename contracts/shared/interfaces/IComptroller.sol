@@ -264,4 +264,10 @@ interface IComptroller {
      * @return The address of COMP
      */
     function getCompAddress() external view returns (address);
+
+    /**
+     * @notice Return the amount of COMP accrued
+     * @return The number of COMP
+     */
+    function compAccrued(address holder) external view returns (uint256);
 }
