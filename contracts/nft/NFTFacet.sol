@@ -45,6 +45,23 @@ contract NFTFacet is RolesMods {
     }
 
     /**
+     * @notice it unstakes the user's NFTs and transfers it from the diamond
+     * back to the user
+     * @param nftIDs the nftIDs to unstake
+     */
+    function unstakeNFTs(uint256[] calldata nftIDs) external {
+        for (uint256 i; i < nftIDs.length; i++) {
+            // Unstake NFTs by requiring that removing of the staked NFTs by
+            // the msg.sender is a success. If it isn't, we revert
+            require(
+                NFTLib.unstake(nftIDs[i]),
+                "Teller: not the owner of the NFT ID!"
+            );
+            NFTLib.nft().transferFrom(address(this), msg.sender, nftIDs[i]);
+        }
+    }
+
+    /**
      * @notice Transfers multiple Teller NFTs to Diamond and applies user stake.
      * @param nftIDs IDs of Teller NFTs to stake.
      */
