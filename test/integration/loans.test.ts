@@ -3,7 +3,7 @@ import { solidity } from 'ethereum-waffle'
 import { Signer } from 'ethers'
 import hre from 'hardhat'
 
-import { getMarkets, getNFT } from '../../config'
+import { getMarkets } from '../../config'
 import { getPlatformSetting, updatePlatformSetting } from '../../tasks'
 import { Market } from '../../types/custom/config-types'
 import { ITellerDiamond } from '../../types/typechain'
@@ -17,18 +17,18 @@ import {
 chai.should()
 chai.use(solidity)
 
-const { getNamedSigner, contracts, tokens, ethers, evm, toBN } = hre
+const { getNamedSigner, evm } = hre
 
-describe('Loans', () => {
+describe.skip('Loans', () => {
   getMarkets(hre.network).forEach(testLoans)
 
   function testLoans(market: Market): void {
     let deployer: Signer
     let diamond: ITellerDiamond
-    let borrower: Signer
+    // let borrower: Signer
 
     before(async () => {
-      ({ diamond } = await fundedMarket({
+      ({ diamond } = await fundedMarket(hre, {
         assetSym: market.lendingToken,
         amount: 100000,
       }))
@@ -57,7 +57,7 @@ describe('Loans', () => {
         it('should create a loan', async () => {
           // get helpers variables after function returns our transaction and
           // helper variables
-          const { getHelpers } = await takeOutLoanWithoutNfts({
+          const { getHelpers } = await takeOutLoanWithoutNfts(hre, {
             lendToken: market.lendingToken,
             collToken: market.collateralTokens[0],
             loanType: LoanType.UNDER_COLLATERALIZED,
@@ -65,7 +65,7 @@ describe('Loans', () => {
           helpers = await getHelpers()
 
           // borrower data from our helpers
-          borrower = helpers.details.borrower.signer
+          // borrower = helpers.details.borrower.signer
 
           // check if loan exists
           expect(helpers.details.loan).to.exist
@@ -97,7 +97,7 @@ describe('Loans', () => {
 
           // trying to run the function will revert with the same error message
           // written in our PausableMods file
-          const { tx } = await takeOutLoanWithoutNfts({
+          const { tx } = await takeOutLoanWithoutNfts(hre, {
             lendToken: market.lendingToken,
             collToken: market.collateralTokens[0],
             loanType: LoanType.UNDER_COLLATERALIZED,
@@ -136,7 +136,7 @@ describe('Loans', () => {
         })
         it('creates a loan', async () => {
           // get helpers
-          const { getHelpers } = await takeOutLoanWithNfts({
+          const { getHelpers } = await takeOutLoanWithNfts(hre, {
             amount: 100,
             lendToken: market.lendingToken,
           })

@@ -19,6 +19,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
+    "@typescript-eslint/no-extraneous-class": "off",
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
@@ -26,11 +27,12 @@
     "@typescript-eslint/no-unused-expressions": "off",
     "@typescript-eslint/require-array-sort-compare":  "off",
     "arrow-parens": "error",
+    "no-extra-semi": "error",
     "no-unused-vars": "off",
     "no-useless-return": "off",
     "no-void": "off",
+    "prefer-arrow-callback": "error",
     "semi": ["error", "never"],
-    "no-extra-semi": "error",
     "simple-import-sort/imports": "error"
   }
 }

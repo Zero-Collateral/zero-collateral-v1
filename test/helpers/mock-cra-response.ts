@@ -1,11 +1,10 @@
 import { BytesLike } from '@ethersproject/bytes'
-import { BigNumberish, Signature } from 'ethers'
-import hre from 'hardhat'
+import { BigNumberish } from 'ethers'
+// import hre from 'hardhat'
+import { HardhatRuntimeEnvironment } from 'hardhat/types'
 
 import { ITellerDiamond } from '../../types/typechain'
 import { NULL_ADDRESS } from '../../utils/consts'
-
-const { contracts, getNamedSigner, ethers } = hre
 
 interface CRAArgs {
   lendingToken: string
@@ -46,7 +45,11 @@ export interface CRAReturn {
   responses: CRAResponse[]
 }
 
-export const mockCRAResponse = async (args: CRAArgs): Promise<CRAReturn> => {
+export const mockCRAResponse = async (
+  hre: HardhatRuntimeEnvironment,
+  args: CRAArgs
+): Promise<CRAReturn> => {
+  const { contracts, getNamedSigner, ethers } = hre
   const network = await ethers.provider.getNetwork()
   const chainId = network.chainId.toString()
 

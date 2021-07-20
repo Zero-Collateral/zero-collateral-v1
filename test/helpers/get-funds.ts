@@ -3,7 +3,7 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types'
 
 import { getTokens } from '../../config'
 import { Address, TokenSymbol } from '../../types/custom/config-types'
-import { ERC20, IERC20, IUniswapV2Router, IWETH } from '../../types/typechain'
+import { ERC20, IUniswapV2Router } from '../../types/typechain'
 import {
   SUSHISWAP_ROUTER_V2_ADDRESS_POLYGON,
   UNISWAP_ROUTER_V2_ADDRESS,

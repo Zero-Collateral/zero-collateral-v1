@@ -108,7 +108,6 @@ const compressTokenTierMappingsFromArray = (
 
       if (tokenId < tokenTiers.length) {
         const tierLevelHexBytes = tokenTiers[tokenId].toHexString().substr(2)
-        // console.log('tier level hex bytes', tierLevelHexBytes.padStart(2, '0'))
         newRow += tierLevelHexBytes.padStart(2, '0')
       } else {
         newRow += '00'

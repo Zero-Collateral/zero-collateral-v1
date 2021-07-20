@@ -63,6 +63,7 @@ contract SushiswapFacet is AbstractUniSwapper {
             address(LibEscrow.e(loanID)),
             block.timestamp
         );
+
         // Call Escrow to do swap get the response amounts
         uint256[] memory amounts = abi.decode(
             LibEscrow.e(loanID).callDapp(address(ROUTER_ADDRESS), callData),

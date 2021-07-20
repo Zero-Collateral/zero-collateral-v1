@@ -24,7 +24,7 @@ const {
   toBN,
 } = hre
 
-describe('Lending', () => {
+describe.skip('Lending', () => {
   // Run tests for all markets
   getMarkets(network).forEach(testLP)
 
@@ -59,10 +59,11 @@ describe('Lending', () => {
         let helpers: ReturnType<typeof getLPHelpers>
 
         before(async () => {
-          helpers = getLPHelpers({
+          helpers = getLPHelpers(hre, {
             diamond,
             lendingToken,
             tToken,
+            amount: null,
           })
         })
 
@@ -159,7 +160,7 @@ describe('Lending', () => {
               hre,
             })
 
-            await helpers.deposit(lender, depositAmount)
+            await helpers.deposit()
 
             const tTokenBalAfter = await tToken.balanceOf(
               await lender.getAddress()

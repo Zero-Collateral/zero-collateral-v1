@@ -21,7 +21,7 @@ chai.use(solidity)
 
 const { getNamedSigner, contracts, tokens, ethers, evm, toBN } = hre
 
-describe('NFT Dictionary', () => {
+describe.only('NFT Dictionary', () => {
   getMarkets(hre.network).forEach(testLoans)
 
   function testLoans(market: Market): void {
@@ -154,11 +154,6 @@ describe('NFT Dictionary', () => {
           const tokenTier = await nftDictionary.getTokenTierIndex(
             lastOwnedTokenId
           )
-
-          //console.log(`token tier for ${lastOwnedTokenId} is ${tokenTier}`)
-
-          //console.log(`merkleData.tierIndex was ${merkleData.tierIndex}`)
-
           tokenTier.should.equal(merkleData.tierIndex)
         }
       })

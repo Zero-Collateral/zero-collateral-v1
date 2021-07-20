@@ -15,11 +15,8 @@ export async function updatePlatformSetting(
 ): Promise<void> {
   const { name, value } = args
   const { getNamedSigner, contracts, network, ethers, log } = hre
-
-  const deployer = await getNamedSigner('deployer')
-
   log('')
-
+  const deployer = await getNamedSigner('deployer')
   const settingNames = Object.keys(getPlatformSettings(network))
   if (!settingNames.includes(name)) {
     log(`>>>>>> Setting name does not exist: ${name} <<<<<<`, { indent: 1 })
