@@ -21,6 +21,9 @@ import { LoanDataFacet } from "../../market/LoanDataFacet.sol";
 import { RepayFacet } from "../../market/RepayFacet.sol";
 import { SignersFacet } from "../../market/SignersFacet.sol";
 import { NFTFacet } from "../../nft/NFTFacet.sol";
+import {
+    NFTMainnetBridgingToPolygonFacet
+} from "../../nft/polygon/NFTMainnetBridgingToPolygonFacet.sol";
 import { CollateralFacet } from "../../market/CollateralFacet.sol";
 import { CompoundFacet } from "../../escrow/dapps/CompoundFacet.sol";
 import { AaveFacet } from "../../escrow/dapps/AaveFacet.sol";
@@ -39,6 +42,7 @@ abstract contract ITellerDiamond is
     RepayFacet,
     SignersFacet,
     NFTFacet,
+    NFTMainnetBridgingToPolygonFacet,
     CompoundFacet,
     AaveFacet,
     PoolTogetherFacet,

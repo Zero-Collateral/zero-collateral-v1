@@ -248,6 +248,7 @@ contract TellerNFT is ITellerNFT, ERC721Upgradeable, AccessControlUpgradeable {
      */
     function initialize(address[] calldata minters)
         external
+        virtual
         override
         initializer
     {
